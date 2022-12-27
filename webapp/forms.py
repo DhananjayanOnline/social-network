@@ -14,3 +14,4 @@ class UserRegistrationForm(UserCreationForm):
             'last_name',
             'email'
         ]
+
