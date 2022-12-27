@@ -13,7 +13,7 @@ class Posts(models.Model):
     @property
     def comment(self):
         return self.comments_set.all()
-
+    @property
     def likes(self):
         return self.like.all().count()
 

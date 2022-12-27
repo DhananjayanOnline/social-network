@@ -18,4 +18,17 @@ class UserRegistrationForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Posts
+        fields = [
+            'title',
+            'image',
+        ]
+
+        widgets = {
+            'title':forms.TextInput(attrs={"class":"form-control"}),
+            'image':forms.FileInput(attrs={"class":"form-control"}),
+        }
