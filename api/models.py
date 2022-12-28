@@ -6,16 +6,23 @@ from django.contrib.auth.models import User
 class Posts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='images', null=True)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
     like = models.ManyToManyField(User, related_name='like')
     created_date = models.DateField(auto_now_add=True)
 
     @property
-    def comment(self):
+    def comments(self):
         return self.comments_set.all()
     @property
     def likes(self):
         return self.like.all().count()
+
+    @property
+    def imageURL(self):
+        if self.image:
+            return self.image.url
+        else:
+            return ""
 
     def __str__(self):
         return self.title

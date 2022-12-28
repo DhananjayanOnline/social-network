@@ -1,0 +1,45 @@
+{% for post in posts %}
+
+<div class="card-div mt-4 mb-2">
+    <div class="card border border-0 shadow-sm" style="width: 100%">
+        <img src="{{post.imageURL}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <p class="card-text">{{post.title}}</p>
+
+            <div class="btn-group border border-0" style="width: 100%;" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-light shadow-sm text-dark">Repost</button>
+                <button type="button" class="btn btn-outline-light shadow-sm text-dark collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#flush-collapse{{post.id}}" aria-expanded="false"
+                    aria-controls="flush-collapseOne">Comment</button>
+                <button type="button" class="btn btn-outline-light shadow-sm text-dark">Like</button>
+            </div>
+
+            <!-- comment section -->
+
+            {% for comment in post.comments %}
+
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                
+                    <div id="flush-collapse{{post.id}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample" style="">
+                        <div class="accordion-body">
+                            <p>comment.user</p>
+                            <p>{{comment.comment}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+            <!-- end of comment section -->
+
+            
+
+            
+        </div>
+    </div>
+</div>
+
+{% endfor %}

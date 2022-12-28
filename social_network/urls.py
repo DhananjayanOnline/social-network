@@ -27,6 +27,8 @@ router.register("posts", views.PostView, basename="posts")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('web/', include("webapp.urls"))
-]+router.urls+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+router.urls
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
