@@ -72,3 +72,13 @@ def like_post(request, *args, **kwargs):
     else:
         ps.like.add(request.user)
     return redirect("home")
+
+
+class ListPeopleView(ListView):
+    template_name="people/list_people.html"
+    model = User
+    context_object_name = 'people'
+
+    def get_queryset(self):
+        return User.objects.exclude(username=self.request.user).order_by('-date')
+   
