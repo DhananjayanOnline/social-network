@@ -32,3 +32,4 @@ class PostForm(forms.ModelForm):
             'title':forms.TextInput(attrs={"class":"form-control"}),
             'image':forms.FileInput(attrs={"class":"form-control"}),
         }
+

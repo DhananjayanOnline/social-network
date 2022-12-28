@@ -40,6 +40,7 @@ class LoginView(FormView):
 class IndexView(CreateView, ListView):
     template_name = "index.html"
     form_class = PostForm
+    model = Posts
     success_url = reverse_lazy("home")
     queryset = Posts.objects.all()
     context_object_name = 'posts'
@@ -53,15 +54,21 @@ class IndexView(CreateView, ListView):
             messages.error(self.request, "uploading failed")
             return render(self.request, "index.html", {"form":form})
 
-    # def post(self, request, *args, **kwargs):
-    #     form = PostForm(request.POST)
-    #     print(request.user)
-    #     if form.is_valid():
-    #         form.instance.user=request.user
-    #         form.save()
-    #         messages.success(request, "New post has been uploaded")
-    #         return redirect("home")
-    #     else:
-    #         messages.error(request, "uploading failed")
-    #         return render(request, "index.html", {"form":form})
-    
+
+def add_comment(request, *args, **kwargs):
+    id = kwargs.get('id')
+    cmt = request.POST.get('comment')
+    qs = Posts.objects.get(id=id)
+    # Comments.objects.create(comment=cmt, post=qs, user=request.user)
+    qs.comments_set.create(user=request.user, comment=cmt)
+    messages.success(request, "Comment added succesfully")
+    return redirect("home")
+
+def like_post(request, *args, **kwargs):
+    id = kwargs.get('id')
+    ps = Posts.objects.get(id=id)
+    if ps.like.contains(request.user):
+        ps.like.remove(request.user)
+    else:
+        ps.like.add(request.user)
+    return redirect("home")
