@@ -77,8 +77,17 @@ def like_post(request, *args, **kwargs):
 class ListPeopleView(ListView):
     template_name="people/list_people.html"
     model = User
-    queryset = User.objects.all()
     context_object_name = 'people'
 
-    # def get_queryset(self):
-    #     return User.objects.exclude(username=self.request.user)
+    def get_queryset(self):
+        return User.objects.exclude(username=self.request.user)
+ 
+
+def add_follower(request, *args, **kwargs):
+    id = kwargs.get('id')
+    usr = User.objects.get(id=id)
+    if not Friends.objects.filter(user=usr, follower=request.user):
+        Friends.objects.create(user=usr, follower=request.user)
+    else:
+        Friends.objects.get(user=usr, follower=request.user).delete()
+    return redirect("home")
