@@ -1,13 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<style>
+    .parent{
+        display: grid;
+        gird
+    }
+</style>
+
 <div class="list-people">
-    {% for person in people %}
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">
-                {{person.username}}
-                
-            </p>
+
+    <div class="row">
+            {% for person in people %}
+            <div class="card mt-3" style="width: 18em;">
+                <img src="../../../images/propic.png" width="100%" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">
+                        {{person.username}}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
+
 </div>
+
+{% endblock %}

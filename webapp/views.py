@@ -77,8 +77,8 @@ def like_post(request, *args, **kwargs):
 class ListPeopleView(ListView):
     template_name="people/list_people.html"
     model = User
+    queryset = User.objects.all()
     context_object_name = 'people'
 
-    def get_queryset(self):
-        return User.objects.exclude(username=self.request.user).order_by('-date')
-   
+    # def get_queryset(self):
+    #     return User.objects.exclude(username=self.request.user)
