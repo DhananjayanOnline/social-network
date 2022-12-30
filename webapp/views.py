@@ -42,8 +42,9 @@ class IndexView(CreateView, ListView):
     form_class = PostForm
     model = Posts
     success_url = reverse_lazy("home")
-    queryset = Posts.objects.all()
+    queryset = Posts.objects.all().order_by('-created_date')
     context_object_name = 'posts'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["followings"] = Friends.objects.filter(follower=self.request.user)
@@ -83,6 +84,12 @@ class ListPeopleView(ListView):
     template_name="people/list_people.html"
     model = User
     context_object_name = 'people'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["followings"] = Friends.objects.filter(follower=self.request.user)
+        context["posts"] = Posts.objects.all().order_by('-created_date')
+        return context
+    
 
     def get_queryset(self):
         return User.objects.exclude(username=self.request.user)
@@ -95,4 +102,8 @@ def add_follower(request, *args, **kwargs):
         Friends.objects.create(user=usr, follower=request.user)
     else:
         Friends.objects.get(user=usr, follower=request.user).delete()
-    return redirect("home")
+    return redirect("people")
+
+def sign_out(request, *args, **kwargs):
+    login(request, request.user)
+    return redirect("sign-in")

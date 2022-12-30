@@ -11,11 +11,12 @@ class Posts(models.Model):
     created_date = models.DateField(auto_now_add=True)
 
     @property
-    def comments(self):
-        return self.comments_set.all()
-    @property
     def likes(self):
         return self.like.all().count()
+
+    @property
+    def comments(self):
+        return self.comments_set.all()
 
     @property
     def imageURL(self):

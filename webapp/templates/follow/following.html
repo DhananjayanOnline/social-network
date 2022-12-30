@@ -5,12 +5,30 @@
       crossorigin="anonymous"
     />
 
+    <style>
+        .parent{
+            display: grid;
+            grid-gap: 5px;
+            grid-column-gap: 0px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-row-gap: 5px;
+            grid-column-gap: 5px;
+            padding: 1em;
+        }
+    </style>
 
 
 <div class="following">
-    <div class="card">
-        <div class="card-body">
-            image
+    <h5 >I'm Following</h5>
+    <div class="card parent border-0 shadow-sm" style="width: 90%;">
+        {% for f in followings %}
+        <div class="card child rounded-5 border-0 shadow-sm" style="width: 100%;">
+            <div class="card-body text-center" >
+                <img src="../../../images/propic.png" width="100%" alt="">
+                <small style="font-size: 0.8em;">{{f.user}}</small>
+            </div>
         </div>
+        {% endfor %}
     </div>
+    
 </div>

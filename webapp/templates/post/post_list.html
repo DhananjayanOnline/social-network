@@ -2,18 +2,22 @@
 
 {% for post in posts %}
 
-<div class="card-div mt-4 mb-2">
-    <div class="card border border-0 shadow-sm" style="width: 100%">
+<div class="card-div mt-4 mb-2 ms-5">
+    <div class="card p-2 border border-0 shadow-sm" style="width: 100%">
         <img src="{{post.imageURL}}" class="card-img-top" alt="...">
         <div class="card-body">
             <p class="card-text">{{post.title}}</p>
 
-            <div class="btn-group border border-0" style="width: 100%;" role="group" aria-label="Basic example">
+            <div class="btn-group border border-0" style="width: 100%;;" role="group" aria-label="Basic example">
                 <a type="button" class="btn btn-outline-light shadow-sm text-dark">Repost</a>
                 <button type="button" class="btn btn-outline-light shadow-sm text-dark collapsed"
                     data-bs-toggle="collapse" data-bs-target="#flush-collapse{{post.id}}" aria-expanded="false"
                     aria-controls="flush-collapseOne">Comment</button>
+                {% if not request.user in post.like.all %}
                 <a href="{% url 'like-post' post.id %}" type="button" class="btn btn-outline-light shadow-sm text-dark">{{post.likes}} Like</a>
+                {% else %}
+                <a href="{% url 'like-post' post.id %}" type="button" class="btn btn-outline-light shadow-sm text-danger">{{post.likes}} Liked</a>
+                {% endif %}
             </div>
 
             <!-- comment section -->
